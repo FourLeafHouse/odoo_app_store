@@ -9,14 +9,18 @@ class Controller(http.Controller):
     @http.route('/api/version-check', type='json', auth='public', methods=['POST'], csrf=False)
     def mobile_app_version_check(self, **kw):
         platform = kw.get('platform')
-        data = {
-            'isSuccess': True,
-            'message': 'Success'
-        }
+        data = { 'isSuccess': True,'message': 'Success'}
+        package_name_android = request.env['ir.config_parameter'].sudo().get_param('android_package_name')
+        package_name_ios = request.env['ir.config_parameter'].sudo().get_param('ios_package_name')
+        if package_name_android == False or package_name_ios == False:
+            return {
+                'isSuccess': False,
+                'message': "Error: Android or iOS package name not configured"
+            }
+
         try:
             if platform == 'android':
-                package_name = request.env['ir.config_parameter'].sudo().get_param('android_package_name')
-                url = f"https://play.google.com/store/apps/details?id={package_name}&hl=en"
+                url = f"https://play.google.com/store/apps/details?id={package_name_android}&hl=en"
                 headers = {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'
                 }
@@ -27,15 +31,14 @@ class Controller(http.Controller):
                     data.update({
                         'storeVersion': match.group(1),
                         'storeUrl': url,
-                        'packageName': package_name
+                        'packageName': package_name_android
 
                     })
                 else:
                     raise ValueError("Version not found in Android store page")
 
             elif platform == 'ios':
-                package_name = request.env['ir.config_parameter'].sudo().get_param('ios_package_name')
-                url = f'https://itunes.apple.com/lookup?bundleId={package_name}&country=us'
+                url = f'https://itunes.apple.com/lookup?bundleId={package_name_ios}&country=us'
                 response = requests.get(url)
 
                 if response.status_code == 200 and response.json()['results']:
@@ -43,7 +46,7 @@ class Controller(http.Controller):
                     data.update({
                         'storeVersion': result.get('version'),
                         'storeUrl': result.get('trackViewUrl'),
-                        'packageName': package_name
+                        'packageName': package_name_ios
                     })
                 else:
                     raise ValueError("Version not found in iOS store response")
