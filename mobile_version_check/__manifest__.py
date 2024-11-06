@@ -1,6 +1,6 @@
 {
     'name': 'Mobile APP Version Check API',
-    'version': '17.0.1.0.0',
+    'version': '18.0.1.0.0',
     'summary': 'AppStore (IOS), PlayStore (Android) Current APP Last Version Check Odoo API',
     'description': 'AppStore (IOS), PlayStore (Android) Current APP Last Version Check Odoo API',
     'category': 'Extra Tools',
