@@ -1,5 +1,5 @@
 {
-    "name": "Hide Powered by Odoo",
+    "name": "Hide Powered by Odoo (FLH)",
     "summary": "Hide Powered by Odoo in Login, Website and POS",
     "version": "15.0.1.0.0",
     "category": "Extra Tools",
