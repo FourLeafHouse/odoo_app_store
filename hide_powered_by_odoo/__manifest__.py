@@ -5,7 +5,7 @@
     "category": "Extra Tools",
     "author": "WaiYan-DEVJ@K3R, FourLeafHouse",
     "license": "LGPL-3",
-    "depends": ['base','portal','point_of_sale'],
+    "depends": ['base','web','portal','point_of_sale'],
     "data": [
         'views/portal_templates.xml',
         'views/webclient_templates.xml'
