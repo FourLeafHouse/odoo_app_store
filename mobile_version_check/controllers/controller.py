@@ -1,3 +1,4 @@
+
 import requests
 import re
 from odoo import http
@@ -12,6 +13,7 @@ class Controller(http.Controller):
         data = { 'isSuccess': True,'message': 'Success'}
         package_name_android = request.env['ir.config_parameter'].sudo().get_param('android_package_name')
         package_name_ios = request.env['ir.config_parameter'].sudo().get_param('ios_package_name')
+        force_update = request.env['ir.config_parameter'].sudo().get_param('force_update')
         if package_name_android == False or package_name_ios == False:
             return {
                 'isSuccess': False,
@@ -31,7 +33,8 @@ class Controller(http.Controller):
                     data.update({
                         'storeVersion': match.group(1),
                         'storeUrl': url,
-                        'packageName': package_name_android
+                        'packageName': package_name_android,
+                        'forceUpdate': force_update
 
                     })
                 else:
@@ -46,7 +49,8 @@ class Controller(http.Controller):
                     data.update({
                         'storeVersion': result.get('version'),
                         'storeUrl': result.get('trackViewUrl'),
-                        'packageName': package_name_ios
+                        'packageName': package_name_ios,
+                        'forceUpdate': force_update
                     })
                 else:
                     raise ValueError("Version not found in iOS store response")
