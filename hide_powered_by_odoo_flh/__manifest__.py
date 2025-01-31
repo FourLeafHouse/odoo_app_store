@@ -12,10 +12,10 @@
         ],
     'assets': {
         'web.assets_frontend': [
-            'hide_powered_by_odoo/static/src/css/website.css',
+            'hide_powered_by_odoo_flh/static/src/css/website.css',
         ],
         'point_of_sale._assets_pos': [
-            'hide_powered_by_odoo/static/src/xml/order_receipt.xml',
+            'hide_powered_by_odoo_flh/static/src/xml/order_receipt.xml',
         ],
     },
     "images": ['static/description/banner.png'],
